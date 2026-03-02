@@ -3,7 +3,7 @@
     <div class="card-title">
       <div class="title-icon"></div>
       <span>实时告警信息</span>
-      <div class="alarm-badge" :class="{ blink: alarms.length > 0 }">{{ alarms.length }}</div>
+      <el-badge :value="alarms.length" :max="99" type="danger" class="alarm-badge-ep" />
     </div>
     <div class="alarm-scroll-wrap" ref="scrollWrap">
       <div class="alarm-scroll-inner" ref="scrollInner">
@@ -13,14 +13,22 @@
           class="alarm-row"
           :class="alarm.level"
         >
-          <span class="alarm-level-tag" :class="alarm.level">{{ levelLabel[alarm.level] }}</span>
+          <el-tag
+            :type="tagType[alarm.level]"
+            size="small"
+            effect="dark"
+            class="alarm-level-tag-ep"
+          >{{ levelLabel[alarm.level] }}</el-tag>
           <div class="alarm-content">
             <div class="alarm-msg">{{ alarm.message }}</div>
             <div class="alarm-meta">{{ alarm.station }} · {{ alarm.time }}</div>
           </div>
-          <span class="alarm-status" :class="alarm.handled ? 'handled' : 'pending'">
-            {{ alarm.handled ? '已处理' : '处理中' }}
-          </span>
+          <el-tag
+            :type="alarm.handled ? 'success' : 'warning'"
+            size="small"
+            effect="plain"
+            class="alarm-status-ep"
+          >{{ alarm.handled ? '已处理' : '处理中' }}</el-tag>
         </div>
       </div>
     </div>
@@ -29,6 +37,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ElBadge, ElTag } from 'element-plus'
 
 interface Alarm {
   id: number
@@ -43,6 +52,12 @@ const levelLabel: Record<string, string> = {
   critical: '紧急',
   warning: '预警',
   info: '通知'
+}
+
+const tagType: Record<string, 'danger' | 'warning' | 'info'> = {
+  critical: 'danger',
+  warning: 'warning',
+  info: 'info'
 }
 
 const MESSAGES = {
@@ -137,21 +152,8 @@ onUnmounted(() => {
   min-height: 0;
 }
 
-.alarm-badge {
+.alarm-badge-ep {
   margin-left: auto;
-  background: var(--color-danger);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 1px 6px;
-  border-radius: 8px;
-  min-width: 18px;
-  text-align: center;
-  box-shadow: 0 0 6px var(--color-danger);
-}
-
-.alarm-badge.blink {
-  animation: blink 1.5s ease-in-out infinite;
 }
 
 .alarm-scroll-wrap {
@@ -192,32 +194,10 @@ onUnmounted(() => {
   border-left-color: rgba(0, 212, 255, 0.4);
 }
 
-.alarm-level-tag {
+.alarm-level-tag-ep {
   flex-shrink: 0;
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 2px;
-  letter-spacing: 0.5px;
   margin-top: 1px;
-}
-
-.alarm-level-tag.critical {
-  background: rgba(255, 68, 68, 0.25);
-  color: var(--color-danger);
-  border: 1px solid rgba(255, 68, 68, 0.4);
-}
-
-.alarm-level-tag.warning {
-  background: rgba(255, 149, 0, 0.2);
-  color: var(--color-warning);
-  border: 1px solid rgba(255, 149, 0, 0.35);
-}
-
-.alarm-level-tag.info {
-  background: rgba(0, 212, 255, 0.1);
-  color: var(--color-primary);
-  border: 1px solid rgba(0, 212, 255, 0.25);
+  font-size: 10px;
 }
 
 .alarm-content {
@@ -237,23 +217,9 @@ onUnmounted(() => {
   margin-top: 2px;
 }
 
-.alarm-status {
+.alarm-status-ep {
   flex-shrink: 0;
-  font-size: 9px;
-  padding: 2px 5px;
-  border-radius: 2px;
   margin-top: 1px;
-}
-
-.alarm-status.handled {
-  color: var(--color-accent);
-  background: rgba(0, 255, 136, 0.1);
-  border: 1px solid rgba(0, 255, 136, 0.25);
-}
-
-.alarm-status.pending {
-  color: var(--color-warning);
-  background: rgba(255, 149, 0, 0.1);
-  border: 1px solid rgba(255, 149, 0, 0.25);
+  font-size: 10px;
 }
 </style>

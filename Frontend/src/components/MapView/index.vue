@@ -366,7 +366,7 @@ function buildOption() {
 
 async function loadBeijingMap() {
   try {
-    const res = await fetch('https://geo.datav.aliyun.com/areas_v3/bound/110000_full.json')
+    const res = await fetch('/beijing.json')
     const geoJson = await res.json()
     echarts.registerMap('beijing', geoJson)
     mapLoaded = true

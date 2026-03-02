@@ -1,19 +1,21 @@
 <template>
   <div class="right-panel">
     <!-- KPI Cards -->
-    <div class="kpi-row">
-      <div v-for="kpi in kpis" :key="kpi.label" class="kpi-card panel-card">
-        <div class="kpi-left">
-          <div class="kpi-value tech-number" :style="{ color: kpi.color }">
-            {{ kpi.value }}<span class="kpi-unit">{{ kpi.unit }}</span>
+    <el-row :gutter="8" class="kpi-row">
+      <el-col :span="12" v-for="kpi in kpis" :key="kpi.label">
+        <div class="kpi-card panel-card">
+          <div class="kpi-left">
+            <div class="kpi-value tech-number" :style="{ color: kpi.color }">
+              {{ kpi.value }}<span class="kpi-unit">{{ kpi.unit }}</span>
+            </div>
+            <div class="kpi-label">{{ kpi.label }}</div>
           </div>
-          <div class="kpi-label">{{ kpi.label }}</div>
+          <div class="kpi-ring" :style="{ '--pct': kpi.pct + '%', '--color': kpi.color }">
+            <span class="ring-val">{{ kpi.pct }}%</span>
+          </div>
         </div>
-        <div class="kpi-ring" :style="{ '--pct': kpi.pct + '%', '--color': kpi.color }">
-          <span class="ring-val">{{ kpi.pct }}%</span>
-        </div>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
 
     <!-- Alarm List -->
     <AlarmList class="flex-grow" />
@@ -28,6 +30,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { ElRow, ElCol } from 'element-plus'
 import AlarmList from './AlarmList.vue'
 import LineStatusChart from './LineStatusChart.vue'
 import EnergyConsumption from './EnergyConsumption.vue'
@@ -67,10 +70,8 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .kpi-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
   flex-shrink: 0;
+  margin-bottom: 0 !important;
 }
 
 .kpi-card {
