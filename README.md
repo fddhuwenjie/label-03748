@@ -27,6 +27,9 @@ docker-compose down
 > 要求：Node.js >= 18
 
 ```bash
+# 进入前端目录
+cd Frontend
+
 # 安装依赖
 npm install
 
@@ -138,6 +141,7 @@ src/
 | Vite | ^5.2 | 构建工具 |
 | Element Plus | ^2.6 | UI 组件库 |
 | ECharts | ^5.4 | 数据可视化 |
+| echarts-gl | ^2.0 | WebGL 3D 地图渲染 |
 | Nginx | alpine | 生产环境 Web 服务器 |
 
 ### 设计风格
