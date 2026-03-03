@@ -1,11 +1,12 @@
 <template>
-  <div class="panel-card line-status-chart">
+  <div class="panel-card line-status-chart" role="region" aria-label="输电线路负荷率">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>输电线路负荷率</span>
       <span class="title-unit">实时监测</span>
     </div>
-    <div ref="chartRef" class="chart-body"></div>
+    <div ref="chartRef" class="chart-body"
+      role="img" aria-label="输电线路负荷率水平柱状图"></div>
   </div>
 </template>
 
@@ -60,7 +61,7 @@ function buildOption(rates: number[]) {
       data: LINES,
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { color: '#5a8a9a', fontSize: 10 }
+      axisLabel: { color: '#7db8d4', fontSize: 11 }
     },
     series: [{
       type: 'bar',
@@ -79,7 +80,7 @@ function buildOption(rates: number[]) {
         show: true,
         position: 'right',
         color: '#7db8d4',
-        fontSize: 10,
+        fontSize: 11,
         formatter: '{c}%'
       }
     }]

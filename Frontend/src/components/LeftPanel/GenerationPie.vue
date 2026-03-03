@@ -1,18 +1,22 @@
 <template>
-  <div class="panel-card generation-pie">
+  <div class="panel-card generation-pie" role="region" aria-label="发电能源结构">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>发电能源结构</span>
       <span class="title-unit">单位：亿千瓦时</span>
     </div>
     <div class="pie-body">
-      <div ref="chartRef" class="pie-chart"></div>
-      <div class="legend-list">
-        <div v-for="item in legendData" :key="item.name" class="legend-item">
-          <span class="legend-dot" :style="{ background: item.color, boxShadow: `0 0 6px ${item.color}` }"></span>
+      <div ref="chartRef" class="pie-chart"
+        role="img"
+        :aria-label="legendData.map(d => `${d.name} ${d.value}亿千瓦时 占比${d.pct}%`).join('，')"></div>
+      <div class="legend-list" role="list" aria-label="能源结构图例">
+        <div v-for="item in legendData" :key="item.name" class="legend-item" role="listitem"
+          :aria-label="`${item.name}：${item.value} 亿千瓦时，占比 ${item.pct}%`">
+          <span class="legend-dot" aria-hidden="true"
+            :style="{ background: item.color, boxShadow: `0 0 6px ${item.color}` }"></span>
           <span class="legend-name">{{ item.name }}</span>
-          <span class="legend-value" :style="{ color: item.color }">{{ item.value }}</span>
-          <span class="legend-pct">{{ item.pct }}%</span>
+          <span class="legend-value" :style="{ color: item.color }" aria-hidden="true">{{ item.value }}</span>
+          <span class="legend-pct" aria-hidden="true">{{ item.pct }}%</span>
         </div>
       </div>
     </div>
@@ -132,7 +136,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .legend-dot {
@@ -150,7 +154,7 @@ onUnmounted(() => {
 
 .legend-value {
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   min-width: 30px;
   text-align: right;

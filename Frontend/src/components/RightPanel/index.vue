@@ -1,17 +1,19 @@
 <template>
   <div class="right-panel">
     <!-- KPI Cards -->
-    <el-row :gutter="8" class="kpi-row">
+    <el-row :gutter="8" class="kpi-row" role="list" aria-label="电网质量指标">
       <el-col :span="12" v-for="kpi in kpis" :key="kpi.label">
-        <div class="kpi-card panel-card">
+        <div class="kpi-card panel-card" role="listitem"
+          :aria-label="`${kpi.label}：${kpi.value} ${kpi.unit}，占比 ${kpi.pct}%`">
           <div class="kpi-left">
-            <div class="kpi-value tech-number" :style="{ color: kpi.color }">
+            <div class="kpi-value tech-number" :style="{ color: kpi.color }" aria-hidden="true">
               {{ kpi.value }}<span class="kpi-unit">{{ kpi.unit }}</span>
             </div>
             <div class="kpi-label">{{ kpi.label }}</div>
           </div>
-          <div class="kpi-ring" :style="{ '--pct': kpi.pct + '%', '--color': kpi.color }">
-            <span class="ring-val">{{ kpi.pct }}%</span>
+          <div class="kpi-ring" :style="{ '--pct': kpi.pct + '%', '--color': kpi.color }"
+            role="img" :aria-label="`${kpi.pct}%`">
+            <span class="ring-val" aria-hidden="true">{{ kpi.pct }}%</span>
           </div>
         </div>
       </el-col>
@@ -88,14 +90,14 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .kpi-unit {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--text-secondary);
   margin-left: 1px;
 }
 
 .kpi-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 3px;
 }
@@ -122,7 +124,7 @@ onUnmounted(() => clearInterval(timer))
 
 .ring-val {
   position: relative;
-  font-size: 9px;
+  font-size: 11px;
   font-family: 'Courier New', monospace;
   color: var(--text-secondary);
   z-index: 1;
@@ -141,8 +143,48 @@ onUnmounted(() => clearInterval(timer))
 
   .flex-grow {
     flex: none;
-    min-height: 180px;
-    height: 180px;
+    min-height: 200px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .kpi-value {
+    font-size: 18px;
+  }
+
+  .kpi-unit,
+  .kpi-label {
+    font-size: 13px;
+  }
+
+  .kpi-ring {
+    width: 46px;
+    height: 46px;
+  }
+
+  .ring-val {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .kpi-value {
+    font-size: 22px;
+  }
+
+  .kpi-unit,
+  .kpi-label {
+    font-size: 15px;
+  }
+
+  .kpi-ring {
+    width: 56px;
+    height: 56px;
+  }
+
+  .ring-val {
+    font-size: 14px;
   }
 }
 </style>

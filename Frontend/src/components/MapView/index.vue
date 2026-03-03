@@ -214,20 +214,30 @@ function buildOption() {
     backgroundColor: 'transparent',
     tooltip: {
       show: true,
-      backgroundColor: 'rgba(0, 15, 45, 0.92)',
-      borderColor: 'rgba(0, 212, 255, 0.4)',
-      textStyle: { color: '#b0d4ff', fontSize: 11 },
+      backgroundColor: 'rgba(0, 10, 35, 0.95)',
+      borderColor: 'rgba(0, 212, 255, 0.6)',
+      borderWidth: 1,
+      padding: [8, 12],
+      textStyle: { color: '#ffffff', fontSize: 13 },
       formatter: (params: { name: string; value: number | number[] }) => {
         if (typeof params.value === 'number') {
           const load = params.value
-          let status = load > 350 ? '<span style="color:#ff4444">高负荷</span>' : load > 200 ? '<span style="color:#ff9500">中负荷</span>' : '<span style="color:#00ff88">正常</span>'
-          return `<b style="color:#00d4ff">${params.name}</b><br/>用电量：<b>${load}</b> 万kWh<br/>状态：${status}`
+          const status = load > 350
+            ? '<span style="color:#ff6b6b;font-weight:700">● 高负荷</span>'
+            : load > 200
+              ? '<span style="color:#ffb347;font-weight:700">● 中负荷</span>'
+              : '<span style="color:#00ff88;font-weight:700">● 正常</span>'
+          return `<div style="color:#ffffff;font-weight:700;font-size:14px;margin-bottom:4px">${params.name}</div>`
+            + `<div style="color:#d0eeff">用电量：<span style="color:#ffffff;font-weight:700">${load}</span> 万kWh</div>`
+            + `<div style="margin-top:2px">状态：${status}</div>`
         }
         if (Array.isArray(params.value) && params.value[2]) {
           const kv = params.value[2] > 70 ? 500 : params.value[2] > 50 ? 220 : 110
-          return `<b style="color:#00d4ff">${params.name}</b><br/>电压等级：${kv}kV`
+          const kvColor = kv === 500 ? '#00ff88' : kv === 220 ? '#00d4ff' : '#9b8ffa'
+          return `<div style="color:#ffffff;font-weight:700;font-size:14px;margin-bottom:4px">${params.name}</div>`
+            + `<div style="color:#d0eeff">电压等级：<span style="color:${kvColor};font-weight:700">${kv} kV</span></div>`
         }
-        return params.name
+        return `<span style="color:#ffffff">${params.name}</span>`
       }
     },
     globe: undefined,
@@ -255,14 +265,29 @@ function buildOption() {
       },
       emphasis: {
         itemStyle: {
-          color: 'rgba(0, 60, 130, 0.9)',
+          color: 'rgba(0, 80, 160, 0.95)',
           borderColor: '#00d4ff',
           borderWidth: 2
         },
-        label: { show: true, textStyle: { color: '#00d4ff', fontSize: 11, backgroundColor: 'rgba(0,10,30,0.7)', padding: [3, 6] } }
+        label: {
+          show: true,
+          color: '#ffffff',
+          fontSize: 14,
+          fontWeight: 'bold',
+          textStyle: {
+            color: '#ffffff',
+            fontSize: 14,
+            fontWeight: 'bold',
+            backgroundColor: 'rgba(0, 10, 35, 0.88)',
+            padding: [4, 10],
+            borderRadius: 3
+          }
+        }
       },
       label: {
-        show: false
+        show: false,
+        color: '#ffffff',
+        textStyle: { color: '#ffffff' }
       },
       light: {
         main: {
@@ -306,7 +331,14 @@ function buildOption() {
         emphasis: {
           label: {
             show: true,
-            textStyle: { color: '#00d4ff', fontSize: 10 }
+            textStyle: {
+              color: '#ffffff',
+              fontSize: 13,
+              fontWeight: 'bold',
+              backgroundColor: 'rgba(0, 10, 35, 0.85)',
+              padding: [4, 8],
+              borderRadius: 3
+            }
           }
         }
       },
@@ -337,7 +369,16 @@ function buildOption() {
         label: {
           show: true,
           formatter: (p: { name: string }) => p.name,
-          textStyle: { color: '#00ff88', fontSize: 9, borderColor: 'transparent', backgroundColor: 'transparent' },
+          textStyle: {
+            color: '#ffffff',
+            fontSize: 12,
+            fontWeight: 'bold',
+            backgroundColor: 'rgba(0, 20, 50, 0.82)',
+            padding: [3, 6],
+            borderRadius: 2,
+            borderWidth: 1,
+            borderColor: 'rgba(0, 255, 136, 0.5)'
+          },
           distance: 8,
           position: 'top'
         }
@@ -456,8 +497,8 @@ onUnmounted(() => {
 }
 
 .ctrl-btn {
-  padding: 2px 10px;
-  font-size: 10px;
+  padding: 3px 12px;
+  font-size: 12px;
   border: 1px solid rgba(0, 212, 255, 0.25);
   border-radius: 2px;
   color: var(--text-muted);
@@ -468,10 +509,10 @@ onUnmounted(() => {
 
 .ctrl-btn:hover,
 .ctrl-btn.active {
-  background: rgba(0, 212, 255, 0.15);
+  background: rgba(0, 212, 255, 0.22);
   border-color: var(--color-primary);
-  color: var(--color-primary);
-  box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
 }
 
 .map-stats-row {
@@ -500,7 +541,7 @@ onUnmounted(() => {
 }
 
 .mstat-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -575,7 +616,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-secondary);
 }
 

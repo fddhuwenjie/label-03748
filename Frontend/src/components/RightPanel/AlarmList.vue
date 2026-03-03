@@ -1,23 +1,29 @@
 <template>
-  <div class="panel-card alarm-list">
+  <div class="panel-card alarm-list" role="region" aria-label="实时告警信息">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>实时告警信息</span>
-      <el-badge :value="alarms.length" :max="99" type="danger" class="alarm-badge-ep" />
+      <el-badge :value="alarms.length" :max="99" type="danger" class="alarm-badge-ep"
+        :aria-label="`当前共 ${alarms.length} 条告警`" />
     </div>
+    <!-- aria-live="polite" 确保屏幕阅读器在新告警插入时播报 -->
     <div class="alarm-scroll-wrap" ref="scrollWrap">
-      <div class="alarm-scroll-inner" ref="scrollInner">
+      <div class="alarm-scroll-inner" ref="scrollInner"
+        role="log" aria-live="polite" aria-relevant="additions" aria-label="告警列表">
         <div
           v-for="alarm in displayAlarms"
           :key="alarm.id"
           class="alarm-row"
           :class="alarm.level"
+          role="article"
+          :aria-label="`${levelLabel[alarm.level]}告警：${alarm.message}，来自 ${alarm.station}，${alarm.time}，状态：${alarm.handled ? '已处理' : '处理中'}`"
         >
           <el-tag
             :type="tagType[alarm.level]"
             size="small"
             effect="dark"
             class="alarm-level-tag-ep"
+            aria-hidden="true"
           >{{ levelLabel[alarm.level] }}</el-tag>
           <div class="alarm-content">
             <div class="alarm-msg">{{ alarm.message }}</div>
@@ -28,6 +34,7 @@
             size="small"
             effect="plain"
             class="alarm-status-ep"
+            aria-hidden="true"
           >{{ alarm.handled ? '已处理' : '处理中' }}</el-tag>
         </div>
       </div>
@@ -197,7 +204,7 @@ onUnmounted(() => {
 .alarm-level-tag-ep {
   flex-shrink: 0;
   margin-top: 1px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .alarm-content {
@@ -206,13 +213,13 @@ onUnmounted(() => {
 }
 
 .alarm-msg {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-primary);
   line-height: 1.4;
 }
 
 .alarm-meta {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -220,6 +227,6 @@ onUnmounted(() => {
 .alarm-status-ep {
   flex-shrink: 0;
   margin-top: 1px;
-  font-size: 10px;
+  font-size: 12px;
 }
 </style>

@@ -1,22 +1,24 @@
 <template>
-  <div class="panel-card substation-status">
+  <div class="panel-card substation-status" role="region" aria-label="关键变电站状态监控">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>关键变电站状态</span>
       <span class="title-unit">实时监控</span>
     </div>
-    <div class="station-list">
+    <div class="station-list" role="list" aria-label="变电站列表">
       <div
         v-for="station in stations"
         :key="station.name"
         class="station-row"
         :class="station.status"
+        role="listitem"
+        :aria-label="`${station.name}，${station.kv}千伏，负荷率 ${station.load}%，状态：${statusLabel[station.status]}`"
       >
         <div class="station-left">
-          <span class="status-dot" :class="station.status"></span>
+          <span class="status-dot" :class="station.status" aria-hidden="true"></span>
           <span class="station-name">{{ station.name }}</span>
         </div>
-        <div class="station-mid">
+        <div class="station-mid" aria-hidden="true">
           <div class="load-bar-bg">
             <div
               class="load-bar-fill"
@@ -25,23 +27,24 @@
             ></div>
           </div>
         </div>
-        <div class="station-right">
+        <div class="station-right" aria-hidden="true">
           <span class="station-load" :class="station.status">{{ station.load }}%</span>
           <span class="station-kv">{{ station.kv }}kV</span>
         </div>
       </div>
     </div>
-    <div class="status-summary">
+    <div class="status-summary" role="status"
+      :aria-label="`变电站状态汇总：正常 ${onlineCount} 座，预警 ${warnCount} 座，故障 ${offlineCount} 座`">
       <div class="summary-item">
-        <span class="sum-dot online"></span>
+        <span class="sum-dot online" aria-hidden="true"></span>
         <span>正常 <em>{{ onlineCount }}</em></span>
       </div>
       <div class="summary-item">
-        <span class="sum-dot warning"></span>
+        <span class="sum-dot warning" aria-hidden="true"></span>
         <span>预警 <em>{{ warnCount }}</em></span>
       </div>
       <div class="summary-item">
-        <span class="sum-dot offline"></span>
+        <span class="sum-dot offline" aria-hidden="true"></span>
         <span>故障 <em>{{ offlineCount }}</em></span>
       </div>
     </div>
@@ -56,6 +59,12 @@ interface Station {
   load: number
   kv: number
   status: 'online' | 'warning' | 'offline'
+}
+
+const statusLabel: Record<string, string> = {
+  online: '正常',
+  warning: '预警',
+  offline: '故障'
 }
 
 const STATION_NAMES = [
@@ -125,7 +134,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .station-name {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-secondary);
   white-space: nowrap;
 }
@@ -159,7 +168,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .station-load {
-  font-size: 11px;
+  font-size: 12px;
   font-family: 'Courier New', monospace;
   font-weight: 700;
 }
@@ -169,7 +178,7 @@ onUnmounted(() => clearInterval(timer))
 .station-load.offline { color: var(--color-danger); }
 
 .station-kv {
-  font-size: 9px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -178,7 +187,7 @@ onUnmounted(() => clearInterval(timer))
   justify-content: space-around;
   padding: 6px 12px 8px;
   border-top: 1px solid rgba(0, 212, 255, 0.08);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-secondary);
 }
 

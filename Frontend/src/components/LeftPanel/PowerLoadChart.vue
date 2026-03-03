@@ -1,11 +1,12 @@
 <template>
-  <div class="panel-card power-load-chart">
+  <div class="panel-card power-load-chart" role="region" aria-label="实时电网负荷曲线">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>实时电网负荷曲线</span>
       <span class="title-unit">单位：万千瓦</span>
     </div>
-    <div ref="chartRef" class="chart-body"></div>
+    <div ref="chartRef" class="chart-body"
+      role="img" aria-label="24小时电网负荷折线图，单位万千瓦"></div>
   </div>
 </template>
 
@@ -52,7 +53,7 @@ function buildOption(loads: number[]) {
       type: 'category',
       data: hours,
       axisLine: { lineStyle: { color: 'rgba(0, 212, 255, 0.2)' } },
-      axisLabel: { color: '#3a6a7a', fontSize: 9, interval: 5 },
+      axisLabel: { color: '#6aaabb', fontSize: 11, interval: 5 },
       axisTick: { show: false },
       splitLine: { show: false }
     },
@@ -60,7 +61,7 @@ function buildOption(loads: number[]) {
       type: 'value',
       min: 200,
       axisLine: { show: false },
-      axisLabel: { color: '#3a6a7a', fontSize: 9 },
+      axisLabel: { color: '#6aaabb', fontSize: 11 },
       splitLine: { lineStyle: { color: 'rgba(0, 100, 150, 0.15)', type: 'dashed' } }
     },
     series: [

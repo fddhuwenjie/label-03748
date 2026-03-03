@@ -1,11 +1,12 @@
 <template>
-  <div class="panel-card energy-consumption">
+  <div class="panel-card energy-consumption" role="region" aria-label="各区用电量统计">
     <div class="card-title">
-      <div class="title-icon"></div>
+      <div class="title-icon" aria-hidden="true"></div>
       <span>各区用电量统计</span>
       <span class="title-unit">单位：万kWh</span>
     </div>
-    <div ref="chartRef" class="chart-body"></div>
+    <div ref="chartRef" class="chart-body"
+      role="img" aria-label="各区用电量柱状图，单位万千瓦时"></div>
   </div>
 </template>
 
@@ -38,13 +39,15 @@ function buildOption(values: number[]) {
       type: 'category',
       data: DISTRICTS,
       axisLine: { lineStyle: { color: 'rgba(0, 212, 255, 0.2)' } },
-      axisLabel: { color: '#5a8a9a', fontSize: 9 },
+      /* 颜色从 #5a8a9a 提升至 #7db8d4（text-secondary），字号从 9 提升至 11 */
+      axisLabel: { color: '#7db8d4', fontSize: 11 },
       axisTick: { show: false }
     },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
-      axisLabel: { color: '#3a6a7a', fontSize: 9 },
+      /* 颜色从 #3a6a7a 提升至 #6aaabb（text-muted 新值），字号从 9 提升至 11 */
+      axisLabel: { color: '#6aaabb', fontSize: 11 },
       splitLine: { lineStyle: { color: 'rgba(0, 80, 120, 0.15)', type: 'dashed' } }
     },
     series: [{

@@ -4,37 +4,37 @@
     <div class="scan-line"></div>
 
     <!-- Header -->
-    <header class="dashboard-header">
-      <div class="header-left">
+    <header class="dashboard-header" role="banner" aria-label="电网驾驶舱头部信息">
+      <div class="header-left" aria-label="时间与系统指标">
         <div class="time-display">
-          <div class="current-time tech-number">{{ currentTime }}</div>
-          <div class="current-date">{{ currentDate }}</div>
+          <div class="current-time tech-number" aria-live="polite" aria-label="当前时间">{{ currentTime }}</div>
+          <div class="current-date" aria-live="polite">{{ currentDate }}</div>
         </div>
-        <div class="header-stats">
-          <div class="hstat">
+        <div class="header-stats" role="list" aria-label="系统运行指标">
+          <div class="hstat" role="listitem">
             <span class="hstat-label">系统频率</span>
-            <span class="hstat-value tech-number">50.00<em>Hz</em></span>
+            <span class="hstat-value tech-number" aria-label="系统频率 50.00 赫兹">50.00<em aria-hidden="true">Hz</em></span>
           </div>
-          <div class="hstat">
+          <div class="hstat" role="listitem">
             <span class="hstat-label">运行天数</span>
-            <span class="hstat-value tech-number">{{ runDays }}<em>天</em></span>
+            <span class="hstat-value tech-number" :aria-label="`运行天数 ${runDays} 天`">{{ runDays }}<em aria-hidden="true">天</em></span>
           </div>
         </div>
       </div>
 
       <div class="header-center">
-        <div class="title-decoration-row">
+        <div class="title-decoration-row" aria-hidden="true">
           <div class="deco-line"></div>
           <div class="deco-diamond"></div>
           <div class="deco-line"></div>
         </div>
         <h1 class="main-title">
-          <span class="title-icon-left">⚡</span>
+          <span class="title-icon-left" aria-hidden="true">⚡</span>
           中国电网驾驶舱
-          <span class="title-icon-right">⚡</span>
+          <span class="title-icon-right" aria-hidden="true">⚡</span>
         </h1>
-        <div class="title-en">CHINA POWER GRID INTELLIGENT COCKPIT SYSTEM</div>
-        <div class="title-decoration-row bottom">
+        <div class="title-en" aria-hidden="true">CHINA POWER GRID INTELLIGENT COCKPIT SYSTEM</div>
+        <div class="title-decoration-row bottom" aria-hidden="true">
           <div class="deco-line"></div>
           <div class="deco-dots">
             <span v-for="i in 5" :key="i"></span>
@@ -43,48 +43,48 @@
         </div>
       </div>
 
-      <div class="header-right">
-        <div class="sys-status">
-          <span class="status-dot active"></span>
+      <div class="header-right" aria-label="系统状态与负荷">
+        <div class="sys-status" role="status" aria-label="系统运行状态：正常">
+          <span class="status-dot active" aria-hidden="true"></span>
           <span class="status-label">系统运行正常</span>
         </div>
-        <div class="header-kpis">
-          <div class="hstat">
+        <div class="header-kpis" role="list" aria-label="关键负荷指标">
+          <div class="hstat" role="listitem">
             <span class="hstat-label">总负荷</span>
-            <span class="hstat-value tech-number">{{ totalLoad }}<em>万kW</em></span>
+            <span class="hstat-value tech-number" :aria-label="`总负荷 ${totalLoad} 万千瓦`">{{ totalLoad }}<em aria-hidden="true">万kW</em></span>
           </div>
-          <div class="hstat">
+          <div class="hstat" role="listitem">
             <span class="hstat-label">在线站点</span>
-            <span class="hstat-value tech-number">{{ onlineCount }}<em>座</em></span>
+            <span class="hstat-value tech-number" :aria-label="`在线站点 ${onlineCount} 座`">{{ onlineCount }}<em aria-hidden="true">座</em></span>
           </div>
         </div>
-        <div class="weather-row">
-          <span class="weather-text">北京 多云 12°C  湿度 45%</span>
+        <div class="weather-row" aria-label="天气信息">
+          <span class="weather-text">北京 多云 12°C &nbsp;湿度 45%</span>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="dashboard-main">
+    <main class="dashboard-main" role="main" aria-label="电网监控主界面">
       <LeftPanel class="panel-section" />
       <MapView class="panel-section map-section" />
       <RightPanel class="panel-section" />
     </main>
 
     <!-- Footer -->
-    <footer class="dashboard-footer">
+    <footer class="dashboard-footer" role="contentinfo" aria-label="今日电网数据摘要">
       <div class="footer-left">
         <span>国家电网有限公司 &nbsp;STATE GRID CORPORATION OF CHINA</span>
       </div>
-      <div class="footer-center">
-        <span class="footer-stat">今日发电: <em class="tech-number">{{ todayGen }}</em> 亿kWh</span>
-        <span class="footer-sep">◆</span>
-        <span class="footer-stat">今日用电: <em class="tech-number">{{ todayUsed }}</em> 亿kWh</span>
-        <span class="footer-sep">◆</span>
-        <span class="footer-stat">电网告警: <em class="tech-number warn">{{ alarmCount }}</em> 条</span>
+      <div class="footer-center" role="list" aria-label="今日电力统计">
+        <span class="footer-stat" role="listitem">今日发电: <em class="tech-number" :aria-label="`今日发电 ${todayGen} 亿千瓦时`">{{ todayGen }}</em><span aria-hidden="true"> 亿kWh</span></span>
+        <span class="footer-sep" aria-hidden="true">◆</span>
+        <span class="footer-stat" role="listitem">今日用电: <em class="tech-number" :aria-label="`今日用电 ${todayUsed} 亿千瓦时`">{{ todayUsed }}</em><span aria-hidden="true"> 亿kWh</span></span>
+        <span class="footer-sep" aria-hidden="true">◆</span>
+        <span class="footer-stat" role="listitem">电网告警: <em class="tech-number warn" :aria-label="`电网告警 ${alarmCount} 条`">{{ alarmCount }}</em><span aria-hidden="true"> 条</span></span>
       </div>
       <div class="footer-right">
-        <span>数据更新: {{ updateTime }}</span>
+        <span>数据更新: <time :datetime="updateTime">{{ updateTime }}</time></span>
       </div>
     </footer>
   </div>
@@ -206,7 +206,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .current-date {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-secondary);
   letter-spacing: 1px;
 }
@@ -224,7 +224,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .hstat-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
   letter-spacing: 0.5px;
 }
@@ -237,7 +237,7 @@ onUnmounted(() => clearInterval(timer))
 
 .hstat-value em {
   font-style: normal;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-secondary);
   margin-left: 2px;
 }
@@ -291,9 +291,10 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .title-en {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 3px;
-  color: rgba(0, 212, 255, 0.55);
+  /* 不透明度从 0.55 提升至 0.75，改善对比度 */
+  color: rgba(0, 212, 255, 0.75);
   white-space: nowrap;
 }
 
@@ -331,7 +332,7 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .weather-text {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -364,14 +365,14 @@ onUnmounted(() => clearInterval(timer))
 
 /* ========== Footer ========== */
 .dashboard-footer {
-  height: 30px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
   background: rgba(1, 8, 25, 0.95);
   border-top: 1px solid rgba(0, 212, 255, 0.15);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   flex-shrink: 0;
 }
@@ -393,8 +394,9 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .footer-sep {
-  color: rgba(0, 212, 255, 0.3);
-  font-size: 8px;
+  /* 不透明度从 0.3 提升至 0.5，字号从 8px 提升至 10px */
+  color: rgba(0, 212, 255, 0.5);
+  font-size: 10px;
 }
 
 /* ========== Responsive: Small Screen ========== */
@@ -440,12 +442,12 @@ onUnmounted(() => clearInterval(timer))
   }
 
   .title-en {
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 1px;
   }
 
   .current-time {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   /* Main: single column */
@@ -478,7 +480,7 @@ onUnmounted(() => clearInterval(timer))
 
 @media (max-width: 480px) {
   .main-title {
-    font-size: 15px;
+    font-size: 16px;
     letter-spacing: 1px;
   }
 
@@ -493,6 +495,82 @@ onUnmounted(() => clearInterval(timer))
 
   .weather-row {
     display: none;
+  }
+}
+
+/* ========== Large Screen Adaptation ========== */
+@media (min-width: 1600px) {
+  .dashboard-header {
+    height: 108px;
+    padding: 0 40px;
+  }
+
+  .main-title {
+    font-size: 34px;
+  }
+
+  .current-time {
+    font-size: 30px;
+  }
+
+  .hstat-label {
+    font-size: 13px;
+  }
+
+  .hstat-value {
+    font-size: 16px;
+  }
+
+  .hstat-value em {
+    font-size: 13px;
+  }
+
+  .dashboard-footer {
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .dashboard-main {
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .dashboard-header {
+    height: 130px;
+    padding: 0 60px;
+  }
+
+  .main-title {
+    font-size: 42px;
+  }
+
+  .current-time {
+    font-size: 38px;
+  }
+
+  .hstat-label {
+    font-size: 15px;
+  }
+
+  .hstat-value {
+    font-size: 20px;
+  }
+
+  .hstat-value em {
+    font-size: 15px;
+  }
+
+  .dashboard-footer {
+    height: 44px;
+    font-size: 15px;
+    padding: 0 40px;
+  }
+
+  .dashboard-main {
+    gap: 16px;
+    padding: 16px;
   }
 }
 </style>

@@ -1,17 +1,18 @@
 <template>
   <div class="left-panel">
     <!-- KPI Cards -->
-    <el-row :gutter="8" class="kpi-row">
+    <el-row :gutter="8" class="kpi-row" role="list" aria-label="电网关键绩效指标">
       <el-col :span="12" v-for="kpi in kpis" :key="kpi.label">
-        <div class="kpi-card panel-card">
-          <div class="kpi-icon" :style="{ color: kpi.color }">{{ kpi.icon }}</div>
+        <div class="kpi-card panel-card" role="listitem"
+          :aria-label="`${kpi.label}：${kpi.value} ${kpi.unit}，${kpi.trend === 'up' ? '上升' : '下降'} ${kpi.delta}`">
+          <div class="kpi-icon" :style="{ color: kpi.color }" aria-hidden="true">{{ kpi.icon }}</div>
           <div class="kpi-body">
-            <div class="kpi-value tech-number" :style="{ color: kpi.color }">
+            <div class="kpi-value tech-number" :style="{ color: kpi.color }" aria-hidden="true">
               {{ kpi.value }}<span class="kpi-unit">{{ kpi.unit }}</span>
             </div>
             <div class="kpi-label">{{ kpi.label }}</div>
           </div>
-          <div class="kpi-trend" :class="kpi.trend">
+          <div class="kpi-trend" :class="kpi.trend" aria-hidden="true">
             {{ kpi.trend === 'up' ? '▲' : '▼' }} {{ kpi.delta }}
           </div>
         </div>
@@ -102,20 +103,20 @@ onUnmounted(() => clearInterval(timer))
 }
 
 .kpi-unit {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--text-secondary);
   margin-left: 2px;
 }
 
 .kpi-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
 .kpi-trend {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -135,8 +136,38 @@ onUnmounted(() => clearInterval(timer))
 
   .flex-grow {
     flex: none;
-    min-height: 200px;
-    height: 200px;
+    min-height: 220px;
+    height: 220px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .kpi-value {
+    font-size: 18px;
+  }
+
+  .kpi-unit {
+    font-size: 13px;
+  }
+
+  .kpi-label {
+    font-size: 13px;
+  }
+
+  .kpi-trend {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .kpi-value {
+    font-size: 22px;
+  }
+
+  .kpi-unit,
+  .kpi-label,
+  .kpi-trend {
+    font-size: 15px;
   }
 }
 </style>
