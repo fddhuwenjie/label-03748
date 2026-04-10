@@ -19,8 +19,9 @@ viewControl: {
   beta: 2,                 // 方位角
   minAlpha: 15,            // 最小仰角限制
   maxAlpha: 75,            // 最大仰角限制
-  panSensitivity: 0,       // 平移敏感度(禁用平移)
-  rotateSensitivity: 0.8   // 旋转敏感度
+  autoRotate: false,
+  rotateSensitivity: 1,    // 旋转敏感度
+  zoomSensitivity: 1       // 缩放敏感度
 }
 ```
 
@@ -48,12 +49,16 @@ realisticMaterial: {
 }
 ```
 
+### 地图配置
+使用 `geo3D` 配置北京地图面（**不在series中定义**）
+
 ### Series类型汇总
-共5种叠加图层：
-1. `map3D` - 北京地图面
-2. `bar3D` - 3D柱状图（各区域数值）
-3. `lines3D` - 3D飞线效果
-4. `scatter3D` - 点标记x3（不同symbol和大小）
+series数组共5种叠加图层：
+1. `bar3D` - 3D柱状图（各区域数值）
+2. `lines3D` - 3D飞线效果
+3. `scatter3D` - 500kV变电站点标记
+4. `scatter3D` - 220kV变电站点标记
+5. `scatter3D` - 110kV变电站点标记
 
 ---
 
@@ -63,15 +68,15 @@ realisticMaterial: {
 |---------|---------------|----------|---------|
 | **PowerLoadChart.vue** | `line + scatter` 组合折线散点图 | 静态mock | `setInterval` 每5秒模拟更新 |
 | **GenerationPie.vue** | `pie` 环形图<br>(radius: ['38%', '68%']) | 静态mock | `setInterval` 每8秒模拟更新 |
-| **SubstationStatus.vue** | ❌ 纯Vue+CSS，**不使用ECharts** | 随机生成 | `setInterval` 每4秒 |
+| **SubstationStatus.vue** | ❌ 纯Vue+CSS，**不使用ECharts** | 随机生成 | `setInterval` 每6秒 |
 | **EnergyConsumption.vue** | `bar` 垂直柱状图<br>(带LinearGradient渐变) | 静态mock+随机扰动 | `setInterval` 每6秒 |
 | **AlarmList.vue** | ❌ Element Plus，**不使用ECharts**<br>(ElBadge + ElTag) | 静态ALARMS数组 | `setInterval` 每4秒新增，JS控制平滑滚动 |
-| **LineStatusChart.vue** | `bar` 水平条形图<br>(颜色随loadRate动态变化) | 静态mock+随机扰动 | `setInterval` 每7秒 |
+| **LineStatusChart.vue** | `bar` 水平条形图<br>(颜色随loadRate动态变化) | 静态mock+随机扰动 | `setInterval` 每5秒 |
 
 ### 颜色动态变化规则 (LineStatusChart)
-- loadRate > 90 → #ef4444 (红色)
-- loadRate > 75 → #f97316 (橙色) 
-- 默认 → #3b82f6 (蓝色)
+- loadRate > 90 → #ff4444 (红色)
+- loadRate > 75 → #ff9500 (橙色) 
+- 默认 → #00d4ff (青色)
 
 ### ✅ 重要结论
 **所有组件全部使用静态mock数据**，使用 `setInterval` (4s-8s不等) 定时器模拟动态数据效果。
@@ -102,10 +107,9 @@ App.vue 采用 CSS Grid 三栏等高布局：
 
 ### 核心技术点
 1. **CSS变量**：全系统使用 design token (`var(--text-muted)`, `var(--color-primary)`, `var(--glow-color)`)
-2. **Viewport单位**：标题使用 `min(2.8vw, 3rem)` 实现流体响应
-3. **overflow切换**：大屏固定视口(overflow:hidden)，小屏自动滚动(overflow:auto)
-4. **弹性布局降级**：900px以下三栏变单栏，避免内容挤压
-5. **无障碍增强**：所有组件完整ARIA属性（role, aria-label, aria-live, aria-busy）
+2. **overflow切换**：大屏固定视口(overflow:hidden)，小屏自动滚动(overflow:auto)
+3. **弹性布局降级**：900px以下三栏变单栏，避免内容挤压
+4. **无障碍增强**：所有组件完整ARIA属性（role, aria-label, aria-live, aria-busy）
 
 ---
 
